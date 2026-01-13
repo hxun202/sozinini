@@ -1,47 +1,54 @@
 #include<stdio.h>
-#include<Windows.h>
 
-#define SIZE 10
+void shuffle(int array[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		int seed = rand() % size;
+
+		int temporary = array[seed];
+
+		array[seed] = array[i];
+
+		array[i] = temporary;
+	}
+}
 
 int main()
 {
-#pragma region 포인터 배열
-	
-	const char* dialog[SIZE];
+#pragma region 의사 난수
+	// 0~32767 사이의 난수 값을 반환하는 함수입니다.
+ 
+	// UTC 기준으로 1970년 1월 1일 0시 0분 0초부터 경과된 
+	// 시간을 초(sec)로 반환하는 함수입니다.
 
-	dialog[0] = "어서 오세요";
-	dialog[1] = "안녕하세요 의뢰할 게 있어서요";
-	dialog[2] = "그게 무엇인가요?";
-	dialog[3] = "요즘 주변에 이상한 일이 일어나고 있어요";
-	dialog[4] = "자세히 말해주세요";
-	dialog[5] = "제 옆 가게에서 부터 시작된 도난 사건인데, 제 가게를 제외한 가게가 전부 도난당했어요";
-	dialog[6] = "흠... 이상하네요";
-	dialog[7] = "왜 제 가게는 도난을 당하지 않았죠?";
-	dialog[8] = "제가 지금부터 조사해보겠습니다";
-	dialog[9] = "감사합니다";
+	// srand : rand()가 사용할 초기값(seed)을 설정하는 함수
 
-	// 0x0000 : 이전에 누른 적이 없고 호출 시점에도 눌려있지 않은 상태
+	//srand(time(NULL));
 
-	// 0x0001 : 이전에 누른 적이 있고 호출 시점에는 눌려있지 않은 상태
+	//int random = rand() % 10 + 1;
 
-	// 0x8000 : 이전에  누른 적이 없고 호출 시점에는 눌려있는 상태
+	//printf("random : %d\n", random);
 
-	// 0x8001 : 이전에 누른 적이 있고 호출 시점에도 눌려있는 상태
-
-	while (1)
-	{
-		if (GetAsyncKeyState(VK_SPACE) & 0x0001)
-		{
-			printf("enter...\n");
-
-		}
-	}
-	
 
 #pragma endregion
 
+#pragma region 셔플 함수
 
+	srand(time(NULL));
 
+	int list[] = { 0,1,2,3,4,5,6,7,8,9 };
+
+	int size = sizeof(list) / sizeof(list[0]);
+
+	shuffle(list, size);
+
+	for (int i = 0; i < size; i++)
+	{
+		printf("list[%d]의 값 : %d\n", i, list[i]);
+	}
+
+#pragma endregion
 
 	return 0;
 }
