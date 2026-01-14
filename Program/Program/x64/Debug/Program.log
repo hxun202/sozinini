@@ -1,5 +1,2 @@
 ﻿  source.c
-C:\Users\Administrator\Desktop\sozinini\Program\source.c(7,14): warning C4013: 'rand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\Administrator\Desktop\sozinini\Program\source.c(38,2): warning C4013: 'srand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\Administrator\Desktop\sozinini\Program\source.c(38,8): warning C4013: 'time'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
   Program.vcxproj -> C:\Users\Administrator\Desktop\sozinini\Program\x64\Debug\Program.exe
