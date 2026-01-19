@@ -2,7 +2,7 @@
 
 int main()
 {
-
+	printf("system");
 
 	return 0;
 }
