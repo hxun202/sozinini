@@ -7,6 +7,9 @@
       "RelativeMoniker": "D:0:0:{A39D2821-64CC-43BC-932E-1651D50FF685}|Program.vcxproj|solutionrelative:source.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D95D1628-7683-4371-9617-B03BEA64B127}|..\\Class5th (Doubble buffering)\\Class5th (Doubble buffering).vcxproj|C:\\Users\\Administrator\\Desktop\\sozinini\\Class5th (Doubble buffering)\\source.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7949C750-F8AD-440C-A896-4D3E37F9F697}|..\\Class4th (Color System)\\Class4th (Color System).vcxproj|C:\\Users\\Administrator\\Desktop\\sozinini\\Class4th (Color System)\\source.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
@@ -29,11 +32,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "source.c",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\sozinini\\Class5th (Doubble buffering)\\source.c",
+              "RelativeDocumentMoniker": "..\\Class5th (Doubble buffering)\\source.c",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\sozinini\\Class5th (Doubble buffering)\\source.c",
+              "RelativeToolTip": "..\\Class5th (Doubble buffering)\\source.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2026-01-22T11:20:10.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "source.c",
               "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\sozinini\\Class4th (Color System)\\source.c",
               "RelativeDocumentMoniker": "..\\Class4th (Color System)\\source.c",
@@ -45,7 +61,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "source.c",
               "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\sozinini\\Class3th (File Input \u0026 Output)\\source.c",
               "RelativeDocumentMoniker": "..\\Class3th (File Input \u0026 Output)\\source.c",
@@ -57,7 +73,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "source.c",
               "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\sozinini\\Class2th (Time)\\source.c",
               "RelativeDocumentMoniker": "..\\Class2th (Time)\\source.c",
@@ -69,7 +85,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "source.c",
               "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\sozinini\\Class1th (Input System)\\source.c",
               "RelativeDocumentMoniker": "..\\Class1th (Input System)\\source.c",
@@ -81,7 +97,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "stdio.h",
               "DocumentMoniker": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h",
@@ -99,7 +115,7 @@
               "RelativeDocumentMoniker": "source.c",
               "ToolTip": "C:\\Users\\Administrator\\Desktop\\sozinini\\Program\\source.c",
               "RelativeToolTip": "source.c",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAAAF8AAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2026-01-12T11:10:37.058Z",
               "EditorCaption": ""
