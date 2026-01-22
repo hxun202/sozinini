@@ -1,3 +1,6 @@
 ﻿  source.c
-C:\Users\Administrator\Desktop\sozinini\Program\source.c(76,44): warning C4267: '함수': 'size_t'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\sozinini\Program\source.c(106,44): warning C4267: '함수': 'size_t'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\sozinini\Program\source.c(131,22): warning C4244: '*=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\sozinini\Program\source.c(132,23): warning C4244: '*=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\sozinini\Program\source.c(158,7): warning C4101: 'choice' :참조되지 않은 지역 변수입니다.
   Program.vcxproj -> C:\Users\Administrator\Desktop\sozinini\Program\x64\Debug\Program.exe
