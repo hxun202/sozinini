@@ -55,7 +55,7 @@ int main()
 
 #pragma region 파일 읽기
 
-	// load("Resources/unit2.txt");
+	 load("Resources/unit2.txt");
 
 #pragma endregion
 

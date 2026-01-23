@@ -126,7 +126,7 @@
     <ClCompile Include="source.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sdl.h" />
+    <ClInclude Include="map.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
