@@ -50,7 +50,7 @@
               "RelativeDocumentMoniker": "main.c",
               "ToolTip": "C:\\Users\\Administrator\\Desktop\\sozinini\\Program\\main.c",
               "RelativeToolTip": "main.c",
-              "ViewState": "AgIAAC8BAAAAAAAAAAAAAOoAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAACwBAAAAAAAAAAAiwPwAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2026-01-23T12:14:27.582Z",
               "EditorCaption": ""
@@ -137,8 +137,7 @@
               "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\ucrt\\stdio.h",
               "ViewState": "AgIAAFsFAAAAAAAAAAAEwG8FAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-01-12T11:30:50.543Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-12T11:30:50.543Z"
             },
             {
               "$type": "Document",
@@ -150,8 +149,7 @@
               "RelativeToolTip": "source.c",
               "ViewState": "AgIAAA4BAAAAAAAAAAAmwDgBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2026-01-12T11:10:37.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-12T11:10:37.058Z"
             }
           ]
         }
