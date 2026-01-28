@@ -1,2 +1,5 @@
 ﻿  main.c
+C:\Users\Administrator\Desktop\sozinini\Program\main.c(56,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 '<unnamed-enum-BOSS>' 왼쪽은 무시됩니다.
+C:\Users\Administrator\Desktop\sozinini\Program\main.c(450,50): warning C4244: '-=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\sozinini\Program\main.c(451,48): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   테스트.vcxproj -> C:\Users\Administrator\Desktop\sozinini\Program\x64\Debug\테스트.exe

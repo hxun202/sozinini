@@ -33,16 +33,27 @@ typedef struct {
 	int defense;
     int mp;
 	int maxMp;
+    int exp;
+    int nextexp;
 } Player;
 
 typedef struct
 {
+    char name[32];
     int hp;
     int maxHp;
     int attack;
     int defense;
-} Boss; 
+    int exp;
+} Monster; 
 
+typedef enum
+{
+    BOSS,
+    SLIME,
+    GOBLIN,
+    MON_COUNT
+};
 typedef enum
 {
     WIN,
@@ -58,29 +69,35 @@ typedef enum
 } GameState;
 
 GameState gameState = STATE_MENU;
-Player player = { 1, 100, 100, 30, 20, 50, 50 };
-Boss boss = { 300, 300, 50, 40 };
+Player player = { 1, 100, 100, 30, 20, 50, 50, 0, 100 };
+Monster monster[MON_COUNT] =
+{
+    { "세르기우스", 500, 500, 80, 60, 200 },
+    { "슬라임", 30, 30, 5, 5, 15 },
+    { "고블린", 60, 60, 15, 5, 30 }
+};
+
 
 char map[MAP_H][MAP_W + 1] = {
     "########################################",
     "#......................................#",
-    "#..######...............######.........#",
+    "#..######..S............######.........#",
     "#......................................#",
-    "#..............####....................#",
-    "#......................................#",
+    "#..............####.......G............#",
+    "#....................S.................#",
     "#....####..............................#",
-    "#......................................#",
+    "#............S............G............#",
     "#.........................######.......#",
-    "#......................................#",
+    "#.....S.....................S..........#",
     "#..............####....................#",
+    "#...............................G......#",
+    "#....####...........S..................#",
     "#......................................#",
-    "#....####..............................#",
-    "#......................................#",
-    "#.........................######.......#",
-    "#......................................#",
-    "#..............####....................#",
+    "#..............G..........######.......#",
+    "#......S...............................#",
+    "#..........S...####....................#",
     "#..................................B...#",
-    "#......................................#",
+    "#...................G..................#",
     "########################################"
 };
 
@@ -93,10 +110,11 @@ void drawStatus();
 void drawMessage(const char* msg);
 void drawText(int x, int y, int width, const char* text);
 void movePlayer();
+void levelUp();
 void check();
 void pushlog(const char* msg);
-Result Resultbattle(Boss*boss);
-void BattleScreen(Boss* boss, const char* msg);
+Result Resultbattle(Monster*monster);
+void BattleScreen(Monster* monster);
 
 int main()
 {
@@ -120,6 +138,17 @@ int main()
                 _getch();
             }
             else if (select == '3')
+            {
+                player.hp = player.maxHp;
+                player.mp = player.maxMp;
+
+                clearBuffer();
+                drawMessage("휴식을 취합니다.\n"
+                    "HP와 MP가 모두 회복되었습니다.");
+                render();
+                _getch();
+            }
+            else if (select == '4')
                 break;
             continue;
 		}
@@ -165,7 +194,8 @@ void drawMenu()
     drawText(10, 50, 20, "=== MAIN MENU ===");
     drawText(12, 50, 20, "1. 게임 시작");
     drawText(13, 50, 20, "2. 설정");
-    drawText(14, 50, 20, "3. 종료");
+    drawText(14, 50, 20, "3. 휴식");
+    drawText(15, 50, 20, "4. 종료");
     render();
 }
 
@@ -174,10 +204,11 @@ void drawStatus()
     sprintf(&screen[1][50], "========== STATUS ==========");
     sprintf(&screen[3][50], "이벨");
     sprintf(&screen[4][50], "LV : %d", player.level);
-    sprintf(&screen[5][50], "HP : %d / %d", player.hp, player.maxHp);
-    sprintf(&screen[6][50], "MP : %d / %d", player.mp, player.maxMp);
-    sprintf(&screen[7][50], "ATTACK : %d", player.attack);
-    sprintf(&screen[8][50], "DEFENSE : %d", player.defense);
+    sprintf(&screen[5][50], "EXP : %d / %d", player.exp, player.nextexp);
+    sprintf(&screen[6][50], "HP : %d / %d", player.hp, player.maxHp);
+    sprintf(&screen[7][50], "MP : %d / %d", player.mp, player.maxMp);
+    sprintf(&screen[8][50], "ATTACK : %d", player.attack);
+    sprintf(&screen[9][50], "DEFENSE : %d", player.defense);
     sprintf(&screen[15][50], "ESC를 눌러 메인 메뉴로 돌아갈 수 있습니다.");
 }
 
@@ -231,33 +262,76 @@ void movePlayer()
     }
 }
 
+void levelUp()
+{
+    while (player.exp >= player.nextexp)
+    {
+        player.exp -= player.nextexp;
+        player.level++;
+
+        player.maxHp += 20;
+        player.maxMp += 10;
+        player.attack += 5;
+        player.defense += 3;
+
+        player.hp = player.maxHp;
+        player.mp = player.maxMp;
+
+        player.nextexp += 50;
+
+        pushlog("레벨 업!");
+    }
+}
+
+Monster* getMonsterByTile(char tile)
+{
+    switch (tile)
+    {
+    case 'B': return &monster[BOSS];
+    case 'G': return &monster[GOBLIN];
+    case 'S': return &monster[SLIME];
+    default: return NULL;
+    }
+}
+
+
 void check()
 {
-    if (nextTile == 'B')
-    {
-        clearBuffer();
-        drawMessage
-        ( "세르기우스를 발견했습니다!\n"
-        "세르기우스와의 전투를 시작합니다.\n"
-	    "준비되면 아무 키나 눌러 전투를 시작하세요.");
-        render();
-        _getch();
+    Monster* m = getMonsterByTile(nextTile);
+    if (!m) return;
 
-		Boss boss = { 300, 300, 80, 50 };
+    clearBuffer();
 
-        Result result = Resultbattle(&boss);
+    char msg[128];
+    snprintf(msg, sizeof(msg), "%s를 발견했습니다!\n%s와의 전투를 시작합니다.\n준비되면 아무 키나 눌러 전투를 시작하세요.", m->name, m->name);
+    drawMessage(msg);
+    render();
+    _getch();
+
+    Monster temp = *m;  
+    Result result = Resultbattle(&temp);
 
         if (result == WIN)
         {
-            clearBuffer();
-            pushlog("세르기우스를 물리쳤습니다!");
+            player.exp += temp.exp;
+
+            levelUp();
+
+            map[py][px] = '.';
             nextTile = 0;
+
+            clearBuffer();
+            snprintf(msg, sizeof(msg), "%s를 물리쳤습니다!\n아무 키나 눌러 맵으로 돌아가세요.", m->name);
+            drawMessage(msg);
+            render();
+            _getch();
+            return;
         }
         else
         {
             clearBuffer();
             drawMessage
-            ("세르기우스에게 패배했습니다...\n"
+            ("패배했습니다...\n"
                 "1. 다시 싸우기\n"
                 "2. 마을로 돌아가기\n");
             render();
@@ -266,7 +340,7 @@ void check()
 
             if (select == '1')
             {
-                Boss newBoss = { 350, 80, 50 };
+                Monster newBoss = { "세르기우스", 500, 500, 80, 60, 200};
                 player.hp = player.maxHp;
                 player.mp = player.maxMp;
                 Resultbattle(&newBoss);
@@ -282,8 +356,6 @@ void check()
 				nextTile = 0;
             }
         }
-
-    }
 }
 
 void pushlog(const char* msg)
@@ -295,7 +367,7 @@ void pushlog(const char* msg)
     logs[LOG_LINES - 1][63] = '\0';
 }
 
-void BattleScreen(Boss* boss, const char* msg)
+void BattleScreen(Monster* monster)
 {
     int left = (SCREEN_W - BATTLE_W) / 2;
     int top = (SCREEN_H - BATTLE_H) / 2;
@@ -317,16 +389,15 @@ void BattleScreen(Boss* boss, const char* msg)
 
     // 플레이어
     drawText(top + 3, left + 5, 20, "이벨");
-    snprintf(&screen[top + 4][left + 5], 30, "HP : %d / %d", player.hp, player.maxHp);
+    char hpBuf[32];
+    sprintf(hpBuf, "HP : %d / %d", player.hp, player.maxHp);
+    drawText(top + 4, left + 5, 30, hpBuf);
     snprintf(&screen[top + 5][left + 5], 30, "MP : %d / %d", player.mp, player.maxMp);
 
     // 보스 
-    drawText(top + 3, left + 55, 20, "세르기우스");
-    char hpBuf[32];
-    snprintf(hpBuf, sizeof(hpBuf),
-        "HP : %d / %d", boss->hp, boss->maxHp);
+    drawText(top + 3, left + 60, 20, monster->name);
+    sprintf(hpBuf, "HP : %d / %d", monster->hp, monster->maxHp);
     drawText(top + 4, left + 55, 30, hpBuf);
-
 
 
     // 스킬
@@ -343,7 +414,7 @@ void BattleScreen(Boss* boss, const char* msg)
 }
 
 
-Result Resultbattle(Boss* boss)
+Result Resultbattle(Monster* monster)
 {
     char key;
 
@@ -352,13 +423,16 @@ Result Resultbattle(Boss* boss)
     for (int i = 0; i < LOG_LINES; i++)
         strcpy(logs[i], "");
 
-    pushlog("세르기우스와의 전투가 시작됩니다.");
+    char buf[64];
+    snprintf(buf, sizeof(buf), "%s와의 전투가 시작됩니다.", monster->name);
+    pushlog(buf);
 
-    while (boss->hp > 0 && player.hp > 0)
+
+    while (monster->hp > 0 && player.hp > 0)
     {
         clearBuffer();
 
-        BattleScreen(boss, turn == TURN_PLAYER ? "당신의 턴입니다." : "세르기우스의 턴입니다.");
+        BattleScreen(monster);
 
         render();
 
@@ -373,8 +447,10 @@ Result Resultbattle(Boss* boss)
                 if (player.mp >= 5)
                 {
                     player.mp -= 5;
-                    boss->hp -= player.attack * 2;
-                    pushlog("세르기우스에게 60의 피해를 입혔습니다.");
+                    monster->hp -= player.attack * 1.5;
+                    int damage = player.attack * 1.5;
+                    snprintf(buf, sizeof(buf), "%s에게 %d의 피해를 입혔습니다.", monster->name, damage);
+                    pushlog(buf);
                 }
                 else
                 {
@@ -402,8 +478,10 @@ Result Resultbattle(Boss* boss)
                 if (player.mp >= 15)
                 {
                     player.mp -= 15;
-                    boss->hp -= player.attack * 3;
-                    pushlog("세르기우스에게 90의 피해를 입혔습니다!");
+                    monster->hp -= player.attack * 3;
+                    int damage = player.attack * 3;
+                    snprintf(buf, sizeof(buf), "%s에게 %d의 피해를 입혔습니다.", monster->name, damage);
+                    pushlog(buf);
                 }
                 else
                 {
@@ -416,8 +494,10 @@ Result Resultbattle(Boss* boss)
                 if (player.mp >= 35)
                 {
                     player.mp -= 35;
-                    boss->hp -= player.attack * 5;
-                    pushlog("세르기우스에게 150의 피해를 입혔습니다!");
+                    monster->hp -= player.attack * 5;
+                    int damage = player.attack * 5;
+                    snprintf(buf, sizeof(buf), "%s에게 %d의 피해를 입혔습니다.", monster->name, damage);
+                    pushlog(buf);
                 }
                 else
                 {
@@ -439,20 +519,20 @@ Result Resultbattle(Boss* boss)
         }
         else if (turn == TURN_BOSS)
         {
-            int damage = boss->attack / 2 - player.defense;
+            int damage = monster->attack / 2 - player.defense;
             if (damage < 5) damage = 5;
             player.hp -= damage;
 
             char buffer[64];
 
-            snprintf(buffer, sizeof(buffer), " 세르기우스의 공격으로 %d의 피해를 입었습니다.", damage);
+            snprintf(buffer, sizeof(buffer), " %s의 공격으로 %d의 피해를 입었습니다.", monster->name, damage);
             pushlog(buffer);
 
             _getch();
             turn = TURN_PLAYER;
         }
 
-        if (boss->hp <= 0) return WIN;
+        if (monster->hp <= 0) return WIN;
         if (player.hp <= 0) return LOSE;
     }
     return LOSE;
