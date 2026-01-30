@@ -73,8 +73,8 @@ Player player = { 1, 100, 100, 25, 10, 50, 50, 0, 100 };
 Monster monster[MON_COUNT] =
 {
     { "세르기우스", 500, 500, 80, 60, 200 },
-    { "슬라임", 30, 30, 5, 5, 15 },
-    { "고블린", 60, 60, 15, 5, 30 }
+    { "슬라임", 40, 40, 10, 10, 10 },
+    { "고블린", 80, 80, 35, 15, 20 }
 };
 
 
@@ -123,7 +123,7 @@ int main()
 {
     initConsole();
 
-    openingStory();
+   //  openingStory();
 
     map[py][px] = '@';
 
@@ -282,7 +282,7 @@ void movePlayer()
         py = ny;
         if (nextTile == 'B')
         {
-            map[px][py] = '@';
+            map[py][px] = '@';
         }
         else
         {
@@ -359,10 +359,10 @@ void endingStory()
     printSlow("이벨의 손에 힘이 풀리고...\n", 60);
     Sleep(500);
 
-    printSlow("검이 바닥에 닿는 소리가 울려 퍼진다.\n", 60);
+    printSlow("검이 바닥에 떨어지는 소리가 울려 퍼진다.\n", 60);
     Sleep(500);
 
-    printSlow("이벨이 하늘을 올려다 보았고\n", 60);
+    printSlow("이벨이 하늘을 올려다 보자\n", 60);
     Sleep(500);
 
     printSlow("또 다른 예언이 시작될 예감이 들었다.\n", 60);
@@ -512,9 +512,12 @@ void BattleScreen(Monster* monster)
         screen[top + y][left + BATTLE_W - 1] = '#';
     }
 
-    char buf[32];
+    char buf[64];
     snprintf(buf, sizeof(buf), "%d턴", turncount);
     drawText(top + 8, left + 62, 20, buf);
+
+    snprintf(buf, sizeof(buf), "X키로 후퇴할 수 있습니다.");
+    drawText(top + 9, left + 45, 40, buf);
 
     // 제목
     drawText(top + 1, left + 30, 20, "=== BATTLE ===");
@@ -636,6 +639,15 @@ Result Resultbattle(Monster* monster)
                     acted = 0;
                 }
             }
+            else if (key == 'x' || key == 'X')
+            {
+                clearBuffer();
+                snprintf(buf, sizeof(buf), "%s와의 전투에서 후퇴했습니다.", monster->name);
+                drawMessage(buf);
+                render();
+                _getch();
+                return;
+            }
             else
             {
                 pushlog("잘못된 키입니다. Q W E R 중에서 선택하세요.");
@@ -648,6 +660,7 @@ Result Resultbattle(Monster* monster)
                 snprintf(buf, sizeof(buf), "%s의 턴입니다.", monster->name);
                 pushlog(buf);
             }
+
         }
         else if (turn == TURN_BOSS)
         {
