@@ -123,7 +123,7 @@ int main()
 {
     initConsole();
 
-   //  openingStory();
+  openingStory();
 
     map[py][px] = '@';
 
@@ -434,53 +434,21 @@ void check()
             clearBuffer();
             drawMessage
             ("패배했습니다...\n"
-                "1. 다시 싸우기\n"
-                "2. 마을로 돌아가기\n");
+                "아무 키나 눌러 마을로 돌아가세요\n");
             render();
+            system("pause");
 
-            map[px][py] = 'B';
+            map[py][px] = 'B';
+
             px = 2;
             py = 2;
-            map[px][py] = '@';
+            map[py][px] = '@';
 
-            char select = _getch();
-
-            if (select == '1')
-            {
-                Monster newBoss = { "세르기우스", 500, 500, 80, 60, 200};
-                player.hp = player.maxHp;
-                player.mp = player.maxMp;
-         
-                Result retryResult = Resultbattle(&newBoss);
-
-                if (retryResult == WIN)
-                {
-                    player.exp += newBoss.exp;
-                    levelUp();
-
-                    clearBuffer();
-                    drawMessage("세르기우스를 쓰러뜨렸습니다!");
-                    render();
-                    _getch();
-                }
-                else
-                {
-                    clearBuffer();
-                    drawMessage("세르기우스에게 패배했습니다...");
-                    render();
-                    _getch();
-                }
-
-                nextTile = 0;
-            }
-            else
-            {
                 player.hp = player.maxHp;
                 player.mp = player.maxMp;
 
-                map[py][px] = '@';
 				nextTile = 0;
-            }
+          
         }
         nextTile = 0;
 }
@@ -572,6 +540,14 @@ Result Resultbattle(Monster* monster)
 
         if (turn == TURN_PLAYER)
         {
+            if (player.mp <= 0)
+            {
+                pushlog("MP가 0이어서 행동할 수 없으므로 턴이 넘어갑니다.");
+                turn = TURN_BOSS;
+                _getch();
+                continue;
+            }
+
             key = _getch();
 
             int acted = 1;
