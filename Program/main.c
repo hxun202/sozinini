@@ -540,6 +540,25 @@ Result Resultbattle(Monster* monster)
 
         if (turn == TURN_PLAYER)
         {
+            key = _getch();
+
+            int acted = 1;
+
+       if (key == 'x' || key == 'X')
+        {
+            clearBuffer();
+            snprintf(buf, sizeof(buf), "%s와의 전투에서 후퇴했습니다.", monster->name);
+            drawMessage(buf);
+            render();
+            _getch();
+            return;
+        }
+        else
+        {
+            pushlog("잘못된 키입니다. Q W E R 중에서 선택하세요.");
+            acted = 0;
+        }
+
             if (player.mp <= 0)
             {
                 pushlog("MP가 0이어서 행동할 수 없으므로 턴이 넘어갑니다.");
@@ -547,10 +566,6 @@ Result Resultbattle(Monster* monster)
                 _getch();
                 continue;
             }
-
-            key = _getch();
-
-            int acted = 1;
 
             if (key == 'q' || key == 'Q')
             {
@@ -614,20 +629,6 @@ Result Resultbattle(Monster* monster)
                     pushlog("MP가 부족합니다.");
                     acted = 0;
                 }
-            }
-            else if (key == 'x' || key == 'X')
-            {
-                clearBuffer();
-                snprintf(buf, sizeof(buf), "%s와의 전투에서 후퇴했습니다.", monster->name);
-                drawMessage(buf);
-                render();
-                _getch();
-                return;
-            }
-            else
-            {
-                pushlog("잘못된 키입니다. Q W E R 중에서 선택하세요.");
-                acted = 0;
             }
 
             if (acted)
